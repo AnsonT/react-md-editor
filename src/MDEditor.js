@@ -1,6 +1,7 @@
 var classNames = require('classnames');
 var CM = require('codemirror');
 var React = require('react');
+var ReactDOM = require('react-dom')
 var Icons = require('./icons');
 
 require('codemirror/mode/xml/xml');
@@ -15,7 +16,8 @@ var MarkdownEditor = React.createClass({
 		onChange: React.PropTypes.func,
 		options: React.PropTypes.object,
 		path: React.PropTypes.string,
-		value: React.PropTypes.string
+		value: React.PropTypes.string,
+		showToolbar: React.PropTypes.boolean
 	},
 
 	getInitialState () {
@@ -25,8 +27,14 @@ var MarkdownEditor = React.createClass({
 		};
 	},
 
+	getDefaultProps () {
+		return {
+			showToolbar: true
+		};
+	},
+
 	componentDidMount () {
-		this.codeMirror = CM.fromTextArea(this.refs.codemirror.getDOMNode(), this.getOptions());
+		this.codeMirror = CM.fromTextArea(ReactDOM.findDOMNode(this.refs.codemirror), this.getOptions());
 		this.codeMirror.on('change', this.codemirrorValueChanged);
 		this.codeMirror.on('focus', this.focusChanged.bind(this, true));
 		this.codeMirror.on('blur', this.focusChanged.bind(this, false));
@@ -128,7 +136,7 @@ var MarkdownEditor = React.createClass({
 		var editorClassName = classNames('MDEditor_editor', { 'MDEditor_editor--focused': this.state.isFocused });
 		return (
 			<div className="MDEditor">
-				{this.renderToolbar()}
+				{this.props.showToolbar ? this.renderToolbar() : null}
 				<div className={editorClassName}>
 					<textarea ref="codemirror" name={this.props.path} defaultValue={this.props.value} autoComplete="off" />
 				</div>
