@@ -10345,13 +10345,20 @@ var MarkdownEditor = React.createClass({
 		onChange: React.PropTypes.func,
 		options: React.PropTypes.object,
 		path: React.PropTypes.string,
-		value: React.PropTypes.string
+		value: React.PropTypes.string,
+		showToolbar: React.PropTypes.boolean
 	},
 
 	getInitialState: function getInitialState() {
 		return {
 			isFocused: false,
 			cs: {}
+		};
+	},
+
+	getDefaultProps: function getDefaultProps() {
+		return {
+			showToolbar: true
 		};
 	},
 
@@ -10462,7 +10469,7 @@ var MarkdownEditor = React.createClass({
 		return React.createElement(
 			'div',
 			{ className: 'MDEditor' },
-			this.renderToolbar(),
+			this.props.showToolbar ? this.renderToolbar() : null,
 			React.createElement(
 				'div',
 				{ className: editorClassName },

@@ -21,7 +21,7 @@ var App = React.createClass({
 			<div className="example">
 				<div className="hint">The editor is below, with default options. This example also uses marked to generate the preview on the right as you type.</div>
 				<div className="editor">
-					<Editor value={this.state.code} onChange={this.updateCode} />
+					<Editor value={this.state.code} onChange={this.updateCode} showToolbar={false}/>
 				</div>
 				<div className="preview" dangerouslySetInnerHTML={{__html: preview}} />
 			</div>
